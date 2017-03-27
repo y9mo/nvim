@@ -5,6 +5,46 @@ call pathogen#helptags()
 set nocompatible              " be iMproved, required
 filetype off                  " required
 
+let s:editor_root=expand("~/.config/nvim")
+" set the runtime path to include Vundle and initialize
+set rtp+=~/.config/nvim/bundle/Vundle.vim
+call vundle#begin(s:editor_root . '/bundle')
+
+
+" let Vundle manage Vundle, required
+Plugin 'VundleVim/Vundle.vim'
+
+Plugin 'Raimondi/delimitMate'
+Plugin 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+" Plugin 'Shougo/neopairs.vim'
+Plugin 'airblade/vim-gitgutter'
+Plugin 'ap/vim-buftabline'
+Plugin 'docker/docker' , {'rtp': '/contrib/syntax/vim/'}
+Plugin 'fatih/vim-go', {'do': ':GoInstallBinaries'}
+Plugin 'godlygeek/tabular'
+Plugin 'hynek/vim-python-pep8-indent'
+Plugin 'junegunn/goyo.vim'
+Plugin 'kien/ctrlp.vim'
+Plugin 'majutsushi/tagbar'
+Plugin 'ntpeters/vim-better-whitespace'
+Plugin 'pangloss/vim-javascript'
+Plugin 'plasticboy/vim-markdown'
+Plugin 'SirVer/ultisnips'
+Plugin 'honza/vim-snippets'
+Plugin 'scrooloose/nerdtree'
+Plugin 'scrooloose/syntastic'
+Plugin 'terryma/vim-multiple-cursors'
+Plugin 'tpope/vim-commentary'
+Plugin 'tpope/vim-endwise'
+Plugin 'tpope/vim-fugitive'
+Plugin 'tpope/vim-surround'
+Plugin 'vim-airline/vim-airline'
+Plugin 'vim-airline/vim-airline-themes'
+Plugin 'zchee/deoplete-go'
+Plugin 'zchee/deoplete-jedi'
+
+
+call vundle#end()            " required
 filetype plugin indent on    " required
 
 " Leader
@@ -76,7 +116,7 @@ set ignorecase                  " Search case insensitive...
 set smartcase                   " ... but not when search pattern contains upper case characters
 set ttyfast
 " set ttyscroll=3               " noop on linux ?
-"set lazyredraw                  " Wait to redraw
+set lazyredraw                  " Wait to redraw
 " speed up syntax highlighting
 set nocursorcolumn
 set nocursorline
@@ -118,7 +158,7 @@ set listchars=tab:>-,trail:·,eol:¬
 " =============================================================================
 " File Type settings
 " =============================================================================
-au BufNewFile,BufRead *.vim setlocal noet ts=4 sw=4 sts=
+au BufNewFile,BufRead *.vim setlocal noet ts=4 sw=4 sts=4
 au BufNewFile,BufRead *.txt setlocal noet ts=4 sw=4
 au BufNewFile,BufRead *.md setlocal spell noet ts=4 sw=4
 au BufNewFile,BufRead *.yml,*.yaml setlocal expandtab ts=2 sw=2
@@ -204,22 +244,28 @@ let g:airline#extensions#tabline#enabled = 1
 " Deoplete configuration
 " =============================================================================
 let g:deoplete#enable_at_startup = 1
+" let g:deoplete#ignore_sources = {}
+" let g:deoplete#ignore_sources._ = ['buffer', 'member', 'tag', 'file', 'neosnippet']
+let g:deoplete#auto_complete_start_length = 3
 
 let g:python_host_prog = '/usr/local/bin/python'
 let g:python3_host_prog = '/usr/local/bin/python3'
-" nnoremap <leader>jd :YcmCompleter GoToDeclaration<CR>
-" map <leader>g :YcmCompleter GoToDefinitionElseDeclaration<CR>
 
 " Syntastic configuraton
 " =============================================================================
-"set statusline+=%#warningmsg#
-"set statusline+=%{SyntasticStatuslineFlag()}
-"set statusline+=%*
+set statusline+=%#warningmsg#
+set statusline+=%{SyntasticStatuslineFlag()}
+set statusline+=%*
 
-"let g:syntastic_always_populate_loc_list = 1
-"let g:syntastic_auto_loc_list = 1
-"let g:syntastic_check_on_open = 1
-"let g:syntastic_check_on_wq = 0
+let g:syntastic_always_populate_loc_list = 1
+let g:syntastic_auto_loc_list = 1
+let g:syntastic_check_on_wq = 1
+
+let g:syntastic_auto_jump = 1
+let g:syntastic_loc_list_height = 3
+let g:syntastic_ignore_files = ['^/usr/', '*node_modules*', '*vendor*', '*build*', '*LOCAL*', '*BASE', '*REMOTE*']
+
+let g:syntastic_python_checkers = ['flake8', 'pylint']
 
 " Tagbar configuration
 " =============================================================================
@@ -234,9 +280,13 @@ vnoremap <leader>gb :Gblame<CR>
 
 " Ultisnips configuration
 " =============================================================================
-"let g:UltiSnipsExpandTrigger="<c-j>"
-"let g:UltiSnipsJumpForwardTrigger="<c-b>"
-"let g:UltiSnipsJumpBackwardTrigger="<c-z>"
+" let g:UltiSnipsExpandTrigger="<tab>"
+" let g:UltiSnipsJumpForwardTrigger="<tab>"
+" let g:UltiSnipsJumpBackwardTrigger="<s-tab>"
+
+let g:UltiSnipsExpandTrigger="<c-j>"
+let g:UltiSnipsJumpForwardTrigger="<c-b>"
+let g:UltiSnipsJumpBackwardTrigger="<c-z>"
 
 " Livedown configuration
 " =============================================================================
