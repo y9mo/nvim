@@ -25,6 +25,7 @@ Plugin 'kien/ctrlp.vim'
 Plugin 'majutsushi/tagbar'
 Plugin 'ntpeters/vim-better-whitespace'
 Plugin 'pangloss/vim-javascript'
+Plugin 'othree/jspc.vim', { 'for': ['javascript', 'javascript.jsx'] }
 Plugin 'plasticboy/vim-markdown'
 Plugin 'SirVer/ultisnips'
 Plugin 'honza/vim-snippets'
@@ -39,6 +40,7 @@ Plugin 'vim-airline/vim-airline'
 Plugin 'vim-airline/vim-airline-themes'
 Plugin 'zchee/deoplete-go'
 Plugin 'zchee/deoplete-jedi'
+Plugin 'carlitux/deoplete-ternjs', { 'for': ['javascript', 'javascript.jsx'] }
 
 
 call vundle#end()            " required
@@ -243,10 +245,19 @@ let g:airline#extensions#tabline#enabled = 1
 let g:deoplete#enable_at_startup = 1
 " let g:deoplete#ignore_sources = {}
 " let g:deoplete#ignore_sources._ = ['buffer', 'member', 'tag', 'file', 'neosnippet']
-let g:deoplete#auto_complete_start_length = 3
+" let g:deoplete#auto_complete_start_length = 3
 
 let g:python_host_prog = '/usr/local/bin/python'
 let g:python3_host_prog = '/usr/local/bin/python3'
+
+let g:deoplete#omni#functions = {}
+let g:deoplete#omni#functions.javascript = [
+  \ 'tern#Complete',
+  \ 'jspc#omni'
+\]
+
+let g:deoplete#sources = {}
+let g:deoplete#sources['javascript.jsx'] = ['file', 'ultisnips', 'ternjs']
 
 " Syntastic configuraton
 " =============================================================================
@@ -281,7 +292,7 @@ vnoremap <leader>gb :Gblame<CR>
 " let g:UltiSnipsJumpForwardTrigger="<tab>"
 " let g:UltiSnipsJumpBackwardTrigger="<s-tab>"
 
-let g:UltiSnipsExpandTrigger="<c-j>"
+let g:UltiSnipsExpandTrigger="<C-j>"
 let g:UltiSnipsJumpForwardTrigger="<c-b>"
 let g:UltiSnipsJumpBackwardTrigger="<c-z>"
 
